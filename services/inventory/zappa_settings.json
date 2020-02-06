@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "aws_region": "ap-northeast-2",
+        "profile_name": "retail",
+        "project_name": "inventory",
+        "runtime": "python3.7",
+        "s3_bucket": "zappa-retail-dev",
+        "keep_warm": false,
+        "apigateway_enabled" : false,
+        "memory_size" : 256,
+        "debug": false,
+        "lambda_handler" : "inventory.handler"
+    }
+}
