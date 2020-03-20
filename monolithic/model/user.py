@@ -8,9 +8,9 @@
     :license: BSD 3-Clause License, see LICENSE for more details.
 """
 
-from models import db
-from sqlalchemy import DateTime, String, Column
-from sqlalchemy_utc import UtcDateTime, utc, utcnow
+from model import db
+from sqlalchemy import String, Column
+from sqlalchemy_utc import UtcDateTime, utcnow
 
 
 class User(db.Base):

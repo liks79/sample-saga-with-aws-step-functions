@@ -89,11 +89,11 @@ ENV/
 env.bak/
 venv.bak/
 
-# Spyder cloudalbum settings
+# Spyder settings
 .spyderproject
 .spyproject
 
-# Rope cloudalbum settings
+# Rope settings
 .ropeproject
 
 # mkdocs documentation
@@ -105,5 +105,10 @@ venv.bak/
 # pycharm
 .idea
 
-# chalice deployments
-LAB04/02-CloudAlbum-Chalice/cloudalbum/.chalice/deployments
+# pytest
+.pytest_cache
+
+# sqlite
+sqlite.test.db
+sqlite.*
+

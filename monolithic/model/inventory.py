@@ -7,7 +7,7 @@
     :copyright: © 2020 written by sungshik (liks79@gmail.com)
     :license: BSD 3-Clause License, see LICENSE for more details.
 """
-from models import db
+from model import db
 from sqlalchemy_utc import UtcDateTime, utcnow
 from sqlalchemy import Integer, Float, String, Column
 
@@ -41,3 +41,5 @@ class Inventory(db.Base):
             'qty': self.qty,
             'date': self.date
         }
+
+

@@ -14,7 +14,7 @@ import time
 import logging
 
 # Configuration variables from OS environment
-DB_URI = os.getenv('MONOLITHIC_DB_URI', None)
+DB_URI = os.getenv('TEST_DB_URI', 'sqlite:////tmp/sqlite.test.db')
 SQLALCHEMY_ECHO = eval(os.getenv('SQLALCHEMY_ECHO', 'False'))
 LOGGER_NAME = os.getenv('MONOLITHIC_LOGGER', 'MONOLITHIC')
 LOG_LEVEL = os.getenv('MONOLITHIC_LOG_LEVEL', logging.DEBUG)

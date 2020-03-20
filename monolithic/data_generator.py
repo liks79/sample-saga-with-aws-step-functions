@@ -9,13 +9,17 @@
 """
 
 import logging
+import traceback
 import argparse
+
+import sqlalchemy
+
 import config as conf
+from model import db
 from config import logger
 from faker import Faker
-from models import db
-from models.user import User
-from models.inventory import Inventory
+from model.user import User
+from model.inventory import Inventory
 from sqlalchemy_utc import utcnow
 
 parser = argparse.ArgumentParser(description='Initial data generator')
@@ -27,25 +31,25 @@ locale = conf.FAKER_LOCALE
 faker = Faker(locale)
 
 
-def fake_user_generator(length, fake):
+def fake_user_generator(length, faker):
     for x in range(length):
         yield User(
-            user_id='{}{}'.format(fake.user_name(), fake.random_int(0, 1000)),
-            password=fake.password(),
-            email='{}{}'.format(fake.random_int(0, 1000), fake.email()),
-            first_name=fake.first_name(),
-            last_name=fake.last_name(),
-            phone=fake.phone_number(),
-            address=fake.address(),
+            user_id='{}{}'.format(faker.user_name(), faker.random_int(0, 1000)),
+            password=faker.password(),
+            email='{}{}'.format(faker.random_int(0, 1000), faker.email()),
+            first_name=faker.first_name(),
+            last_name=faker.last_name(),
+            phone=faker.phone_number(),
+            address=faker.address(),
             date=utcnow())
 
 
-def fake_inventory_generator(length, fake):
+def fake_inventory_generator(length, faker):
     for x in range(length):
         yield Inventory(
-            item_name='{} ({})'.format(fake.word(), fake.color_name()),
-            price=fake.random_int(100, 99900),
-            qty=fake.random_int(0, 1000),
+            item_name='{} ({})'.format(faker.word(), faker.color_name()),
+            price=faker.random_int(100, 99900),
+            qty=faker.random_int(0, 1000),
             date=utcnow())
 
 
@@ -76,6 +80,13 @@ try:
         db.Base.metadata.drop_all(bind=db.engine)
         logger.info('All tables are dropped.')
 
+except sqlalchemy.exc.OperationalError as err:
+    if err.orig.args[0] == 1045:
+        print('Access Denied')
+    elif err.orig.args[0] == 2003:
+        print('Connection Refused')
+    else:
+        raise
 
-except Exception as e:
-    logger.error(e)
+except sqlalchemy.excNoSuchTableError as e:
+    print('Table does not exist!: %s' % e)
