@@ -55,14 +55,13 @@ try:
     # T4.Initiate Order model
     logger.info('#### T4.INITIATE ORDER MODEL ####')
     ordered_item_qty = fake.random_int(1, 100)
-    order = Order(
-        user_id=user.user_id,
-        item_id=item.item_id,
-        item_qty=ordered_item_qty,
-        date=utcnow(),
-        deliver_phone=fake.phone_number(),
-        deliver_address=fake.address(),
-        total_price=fake.random_int(100, 1000000))
+    order = Order(user_id=user.user_id,
+                  item_id=item.item_id,
+                  item_qty=ordered_item_qty,
+                  date=utcnow(),
+                  deliver_phone=fake.phone_number(),
+                  deliver_address=fake.address(),
+                  total_price=fake.random_int(100, 1000000))
     logger.info(pformat(order.to_json()))
     db.session.add(order)
     # db.session.commit()
@@ -74,11 +73,9 @@ try:
     item.qty = item.qty - ordered_item_qty
 
     # T6.Update Membership model
-    membership = Membership(
-        user_id=user.user_id,
-        date=utcnow(),
-        mileage=fake.random_int(10, 400)
-    )
+    membership = Membership(user_id=user.user_id,
+                            date=utcnow(),
+                            mileage=fake.random_int(10, 400))
     db.session.add(membership)
     logger.info('#### T6.UPDATE MEMBERSHIP ####')
     logger.info(pformat(membership.to_json()))
