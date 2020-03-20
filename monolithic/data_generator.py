@@ -8,19 +8,18 @@
     :license: BSD 3-Clause License, see LICENSE for more details.
 """
 
-import logging
-import traceback
 import argparse
-
 import sqlalchemy
-
-import config as conf
-from model import db
-from config import logger
 from faker import Faker
-from model.user import User
-from model.inventory import Inventory
+import config as conf
+from config import logger
 from sqlalchemy_utc import utcnow
+from model import db
+from model.user import User
+from model.order import Order
+from model.payment import Payment
+from model.inventory import Inventory
+from model.membership import Membership
 
 parser = argparse.ArgumentParser(description='Initial data generator')
 parser.add_argument('--mode', default='append', help='Add initial data to the table')
@@ -82,11 +81,11 @@ try:
 
 except sqlalchemy.exc.OperationalError as err:
     if err.orig.args[0] == 1045:
-        print('Access Denied')
+        logger.error('Access Denied')
     elif err.orig.args[0] == 2003:
-        print('Connection Refused')
+        logger.error('Connection Refused')
     else:
         raise
 
 except sqlalchemy.excNoSuchTableError as e:
-    print('Table does not exist!: %s' % e)
+    logger.error('Table does not exist!: %s' % e)
