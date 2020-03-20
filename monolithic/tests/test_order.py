@@ -1,28 +1,15 @@
 """
-    #TITLE
+    Monolithic order transaction unittest
     ~~~~~~~~~~~~~~~~~~~~~~~
 
-    :created date: 3/16/20
-    :description:
+    :created date: Wednesday, March 18, 2020
+    :description: Monolithic order transaction unnitest
     :copyright: © 2020 written by sungshik (liks79@gmail.com)
     :license: BSD 3-Clause License, see LICENSE for more details.
 """
-import datetime
 import pytest
-import sqlalchemy
-from pytest import yield_fixture
 from sqlalchemy.orm import scoped_session, sessionmaker
-
-# from monolithic.model import db
-from sqlalchemy import create_engine, Table, MetaData, Column, select, Integer
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.sql.ddl import CreateTable
-from sqlalchemy_utc import UtcDateTime, utcnow, utc
 from exception import OutOfStockError, PaymentFailureError
-import config as conf
-from model.order import Order
-from model.payment import Payment
 
 
 def test_db_connection(fx_engine):
@@ -79,31 +66,3 @@ def test_order_success(fx_engine, fx_user, fx_inventory,
     session.add(fx_order)
     session.add(fx_membership)
     session.commit()
-
-
-
-
-
-
-
-#
-#
-#
-# def test_order_fail_payment(fx_engine, fx_user, fx_inventory):
-#     ordered_item_qty = 1
-#     session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=fx_engine))
-#     payment = Payment(pay_type='credit_card',
-#                       user_id=fx_user.user_id,
-#                       allowed=False,
-#                       date=utcnow())
-#     order = Order(
-#         user_id=fx_user.user_id,
-#         item_id=fx_inventory.item_id,
-#         item_qty=ordered_item_qty,
-#         date=utcnow(),
-#         deliver_phone=fake.phone_number(),
-#         deliver_address=fake.address(),
-#         total_price=fake.random_int(100, 1000000))
-#
-#
-#
