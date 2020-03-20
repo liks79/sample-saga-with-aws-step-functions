@@ -59,10 +59,11 @@ def test_order_success(fx_engine, fx_user, fx_inventory,
                        fx_payment_success, fx_order, fx_membership):
     session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=fx_engine))
     ordered_qty = 1  # sure to succeed
-
+    session.add(fx_user)
     fx_inventory.qty = fx_inventory.qty - ordered_qty
     session.add(fx_inventory)
     session.add(fx_payment_success)
+    fx_order.item_id = 1  # sure to existed
     session.add(fx_order)
     session.add(fx_membership)
     session.commit()
